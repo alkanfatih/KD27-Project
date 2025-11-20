@@ -9,6 +9,10 @@ namespace Domain.Entities
 {
     public class ProductDetail : BaseEntity
     {
+        public ProductDetail()
+        {
+            
+        }
         public ProductDetail(string description, int productId, string? features = null, string? usage=null, string? warranty = null)
         {
             Description = description;

@@ -13,7 +13,10 @@ namespace Domain.Entities
         private decimal _price;
         private int _stock;
         private decimal _discount=1;
-
+        public Product()
+        {
+            
+        }
         public Product(string name, decimal price, int stock, int categoryId, string? description)
         {
             Name = name;

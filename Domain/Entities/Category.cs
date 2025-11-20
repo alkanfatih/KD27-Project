@@ -12,6 +12,7 @@ namespace Domain.Entities
         public string Name { get; private set; }
 
         public virtual ICollection<Product> Products { get; private set; } = new List<Product>();
+        public Category() { }
         public Category(string name)
         {
             Name = name;
@@ -27,13 +28,5 @@ namespace Domain.Entities
         { 
             Products.Add(product); 
         }
-
-        /*
-         - Sepet (ShoppingCart - CartItems)
-         - Sipariş
-         - Müşteri
-         - Adres
-         
-         */
     }
 }
