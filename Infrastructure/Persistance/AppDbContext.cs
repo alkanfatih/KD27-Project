@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Domain.Commons;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using System.Linq.Expressions;
 
 namespace Infrastructure.Persistance
 {
@@ -34,8 +35,30 @@ namespace Infrastructure.Persistance
         {
             base.OnModelCreating(modelBuilder);
 
+            //Global Query Filters
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                //Eğer baseentity'den türenmiş bir entity ise
+                if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))
+                {
+                    //IsDeleted = false olacak şekilde global filtre uygulama.
+                    var parameter = Expression.Parameter(entityType.ClrType, "e");
+                    var filter = Expression.Lambda(
+                        Expression.Equal(
+                            Expression.Property(parameter, nameof(BaseEntity.IsDeleted)),
+                            Expression.Constant(false)
+                        ), 
+                        parameter
+                    );
+
+                    modelBuilder.Entity(entityType.ClrType).HasQueryFilter(filter);
+                }
+            }
+
             //Configurations yapılarını uygula
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+
         }
     }
 }

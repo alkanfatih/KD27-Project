@@ -10,7 +10,6 @@ namespace Domain.Interfaces
     public interface IShoppingCartRepository : IRepository<ShoppingCart>
     {
         Task<ShoppingCart?> GetCartWithItemsAsync(int userId);
-        Task<CartItem> GetCartItemWithProduct(int userId);
         Task<IEnumerable<ShoppingCart>> GetCartsWithDetailsAsync();
     }
 }
