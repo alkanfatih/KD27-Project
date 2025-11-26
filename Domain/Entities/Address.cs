@@ -20,7 +20,7 @@ namespace Domain.Entities
             
         }
 
-        public Address(int customerId, string title, string country, string city, string district, string postalCode, string fullAddress, string phone)
+        public Address(int customerId, string title, string country, string city, string district, string postalCode, string fullAddress)
         {
             CustomerId = customerId;
             Title = title;
@@ -29,7 +29,6 @@ namespace Domain.Entities
             District = district;
             PostalCode = postalCode;
             FullAddress = fullAddress;
-            Phone = phone;
         }
 
         public void Update(string title, string country, string city, string district, string postalCode, string fullAddress, string phone)

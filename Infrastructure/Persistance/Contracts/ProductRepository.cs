@@ -1,6 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
 using Domain.RequestParameters;
+using Infrastructure.Persistance.Extensions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,43 +13,69 @@ namespace Infrastructure.Persistance.Contracts
 {
     public class ProductRepository : EfRepository<Product>, IProductRepository
     {
-        public ProductRepository(AppDbContext context) : base(context)
+        public ProductRepository(AppDbContext context) : base(context) { }
+
+        public async Task<IEnumerable<Product>> GetAllProductsWithParametersAsync(ProductRequestParameters parameters)
         {
+            return await _context
+                 .Products
+                 .FilteredByCategoryId(parameters.CategoryId)
+                 .FilteredBySearchTerm(parameters.SearchTerm)
+                 .FilteredByPrice(parameters.MinPrice, parameters.MaxPrice)
+                 .ToPaginate(parameters.PageNumber, parameters.PageSize)
+                 .FilteredOrder(parameters.SortOrder).ToListAsync();
         }
 
-        public Task<IEnumerable<Product>> GetAllProductsWithParametersAsync(ProductRequestParameters parameters)
+        public async Task<Product?> GetByIdWithCategoryAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _dbSet
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted);
         }
 
-        public Task<Product?> GetByIdWithCategoryAsync(int id)
+        public async Task<Product?> GetByIdWithDetailsAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.Images)
+                .Include(p => p.Detail)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public Task<Product?> GetByIdWithDetailsAsync(int id)
+        public async Task<IEnumerable<Product>> GetListByCategoryIdAsync(int categoryId)
         {
-            throw new NotImplementedException();
+            return await _dbSet
+                .Where(p => p.CategoryId == categoryId && !p.IsDeleted)
+                .ToListAsync();
         }
 
-        public Task<IEnumerable<Product>> GetListByCategoryIdAsync(int categoryId)
+        public async Task<IEnumerable<Product>> GetRandomFeaturedProductsAsync(int count)
         {
-            throw new NotImplementedException();
+            return await _dbSet.GetRandomFeaturedProducts(count).ToListAsync();
         }
 
-        public Task<IEnumerable<Product>> GetRandomFeaturedProductsAsync(int count)
+        public async Task<IEnumerable<Product>> GetRecentProductsAsync(int count)
         {
-            throw new NotImplementedException();
+            return await _dbSet.GetTakeProducts(count, false).ToListAsync();
         }
 
-        public Task<IEnumerable<Product>> GetRecentProductsAsync(int count)
+        public async Task<List<Product>> GetTopSellingProductsAsync(int count)
         {
-            throw new NotImplementedException();
-        }
+            var topProductIds = await _context.OrderItems
+                .GroupBy(oi => oi.ProductId)
+                .Select(g => new
+                {
+                    ProductId = g.Key,
+                    TotalSold = g.Sum(x => x.Quantity)
+                })
+                .OrderByDescending(g => g.TotalSold)
+                .Take(count)
+                .Select(g => g.ProductId)
+                .ToListAsync();
 
-        public Task<List<Product>> GetTopSellingProductsAsync(int count)
-        {
-            throw new NotImplementedException();
+            return await _context.Products
+                .Where(p => topProductIds.Contains(p.Id))
+                .ToListAsync();
         }
     }
 }

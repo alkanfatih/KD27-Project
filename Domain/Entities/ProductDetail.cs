@@ -39,6 +39,13 @@ namespace Domain.Entities
             ProductId = productId;
             UpdateDate = DateTime.Now;
         }
-
+        public void Update(string description, string? features, string? usage, string? warranty)
+        {
+            Description = description;
+            Features = features;
+            Usage = usage;
+            Warranty = warranty;
+            UpdateDate = DateTime.UtcNow;
+        }
     }
 }

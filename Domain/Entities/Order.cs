@@ -80,6 +80,10 @@ namespace Domain.Entities
             UpdateDate = DateTime.Now;
         }
 
-
+        public void SetStatus(OrderStatus newStatus)
+        {
+            Status = newStatus;
+            UpdateDate = DateTime.UtcNow;
+        }
     }
 }
