@@ -21,9 +21,9 @@ namespace Infrastructure.Persistance.Contracts
             _dbSet = _context.Set<T>();
         }
 
-        public void AddAsync(T entity)
+        public async Task AddAsync(T entity)
         {
-            _dbSet.Add(entity);
+            await _dbSet.AddAsync(entity);
         }
 
         public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)

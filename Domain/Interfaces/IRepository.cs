@@ -16,7 +16,7 @@ namespace Domain.Interfaces
         Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate, bool isTrack = true, bool igonereFilters = false);
         Task<bool> AnyAsync(Expression<Func<T, bool>> predicate); 
         Task<int> CountAsync(Expression<Func<T, bool>> predicate = null); 
-        void AddAsync(T entity);
+        Task AddAsync(T entity);
         void Update(T entity);
         void Delete(T entity);
         void SoftDelete(T entity);
