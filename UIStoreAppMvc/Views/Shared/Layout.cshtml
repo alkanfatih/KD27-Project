@@ -1,0 +1,221 @@
+﻿@{
+    Layout = null;
+    var title = ViewBag.Title ?? "Ana Sayfa";
+    var cartCount = ViewBag.CartItemCount ?? 0;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - KD27-Project</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebApplication1.styles.css" asp-append-version="true" />
+
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <!-- Üst mini bar -->
+    <div class="top-bar py-1 border-bottom border-secondary-subtle">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-3">
+                <span><i class="fa-solid fa-truck-fast me-1"></i>250 TL üzeri ücretsiz kargo</span>
+                <span class="d-none d-md-inline"><i class="fa-solid fa-phone me-1"></i>+90 (212) 000 00 00</span>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <a href="@Url.Action("Index","Account")"><i class="fa-regular fa-circle-user me-1"></i>Hesabım</a>
+                <a href="@Url.Action("Orders","Account")" class="d-none d-sm-inline"><i class="fa-solid fa-box-archive me-1"></i>Siparişlerim</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <header class="border-bottom bg-white shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center" href="@Url.Action("Index","Home")">
+                    <i class="fa-solid fa-bag-shopping me-2 fs-4 text-primary"></i>
+                    <span>MyShop</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <!-- Kategoriler -->
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-semibold" href="#" data-bs-toggle="dropdown">
+                                <i class="fa-solid fa-bars me-1"></i>Kategoriler
+                            </a>
+                            <ul class="dropdown-menu shadow border-0">
+                                <li><a class="dropdown-item" href="@Url.Action("List","Product", new { category = "Yeni Ürünler" })">Yeni Ürünler</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("List","Product", new { category = "Popüler" })">En Popüler</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="@Url.Action("List","Product", new { category = "Elektronik" })">Elektronik</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("List","Product", new { category = "Moda" })">Moda</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("List","Product", new { category = "Ev & Yaşam" })">Ev & Yaşam</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link @((ViewContext.RouteData.Values["controller"]?.ToString()=="Home" ? "active" : ""))"
+                               href="@Url.Action("Index","Home")">Ana Sayfa</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link @((ViewContext.RouteData.Values["controller"]?.ToString()=="Product" ? "active" : ""))"
+                               href="@Url.Action("List","Product")">Ürünler</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Campaigns","Home")">Kampanyalar</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Contact","Home")">İletişim</a>
+                        </li>
+                    </ul>
+
+                    <!-- Arama + Sepet -->
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="search-box w-100">
+                            @using (Html.BeginForm("Search", "Product", FormMethod.Get, new { @class = "d-flex", role = "search" }))
+                            {
+                                <input name="q" class="form-control form-control-sm me-2" type="search" placeholder="Ürün ara..." aria-label="Search">
+                                <button class="btn btn-sm btn-outline-primary" type="submit">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            }
+                        </div>
+
+                        <a href="@Url.Action("Index","Cart")" class="btn btn-outline-dark position-relative ms-2">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span class="ms-1 d-none d-lg-inline">Sepet</span>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger badge-cart">
+                                @cartCount
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Alt kategori/etiket barı (opsiyonel) -->
+        <div class="border-top bg-light d-none d-md-block">
+            <div class="container py-2 d-flex flex-wrap align-items-center">
+                <span class="me-2 fw-semibold text-muted small">Öne Çıkanlar:</span>
+                <span class="category-pill">İndirimdekiler</span>
+                <span class="category-pill">Bugüne Özel</span>
+                <span class="category-pill">Çok Satanlar</span>
+                <span class="category-pill">Yeni Gelenler</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sayfa içerik alanı -->
+    <main class="main-content py-4">
+        <div class="container">
+            <!-- Breadcrumb için section (opsiyonel) -->
+            @RenderSection("Breadcrumb", required: false)
+
+            <!-- Genel mesajlar (TempData) -->
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fa-regular fa-circle-check me-1"></i>@TempData["Success"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fa-regular fa-circle-xmark me-1"></i>@TempData["Error"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            @RenderBody()
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light pt-5 pb-3 mt-4">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-12 col-md-4">
+                    <h5 class="mb-3 d-flex align-items-center">
+                        <i class="fa-solid fa-bag-shopping me-2 text-primary"></i>MyShop
+                    </h5>
+                    <p class="small text-secondary">
+                        MyShop, binlerce ürünü uygun fiyat ve hızlı teslimat avantajıyla sizlere ulaştıran modern bir e-ticaret platformudur.
+                    </p>
+                    <div class="d-flex gap-2 mt-2">
+                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" class="btn btn-outline-light btn-sm rounded-circle"><i class="fa-brands fa-facebook-f"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-2">
+                    <div class="footer-title">Kurumsal</div>
+                    <ul class="list-unstyled small text-secondary">
+                        <li><a href="@Url.Action("About","Home")">Hakkımızda</a></li>
+                        <li><a href="@Url.Action("Contact","Home")">İletişim</a></li>
+                        <li><a href="@Url.Action("Privacy","Home")">Gizlilik Politikası</a></li>
+                        <li><a href="@Url.Action("Kvkk","Home")">KVKK</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-6 col-md-3">
+                    <div class="footer-title">Müşteri Hizmetleri</div>
+                    <ul class="list-unstyled small text-secondary">
+                        <li><a href="@Url.Action("Faq","Home")">Sıkça Sorulan Sorular</a></li>
+                        <li><a href="@Url.Action("ReturnPolicy","Home")">İade ve Değişim</a></li>
+                        <li><a href="@Url.Action("Cargo","Home")">Kargo & Teslimat</a></li>
+                        <li><a href="@Url.Action("Support","Home")">Destek Talebi Oluştur</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-12 col-md-3">
+                    <div class="footer-title">Bülten</div>
+                    <p class="small text-secondary">
+                        Kampanya ve fırsatlarımızdan haberdar olmak için e-posta adresinizi bırakın.
+                    </p>
+                    <form class="d-flex">
+                        <input type="email" class="form-control form-control-sm me-2" placeholder="E-posta adresiniz" />
+                        <button class="btn btn-primary btn-sm" type="submit">Kaydol</button>
+                    </form>
+                </div>
+            </div>
+
+            <hr class="border-secondary mt-4 mb-3" />
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+                <span class="small text-secondary">
+                    © @DateTime.Now.Year MyShop. Tüm hakları saklıdır.
+                </span>
+                <div class="small text-secondary mt-2 mt-md-0">
+                    <i class="fa-solid fa-shield-halved me-1"></i>Güvenli Ödeme Altyapısı
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast container (örneğin sepete ekleme bildirimleri için) -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        @RenderSection("Toasts", required: false)
+    </div>
+
+    <!-- JS -->
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,78 @@
+﻿body {
+    font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: #f5f5f5;
+}
+
+.top-bar {
+    background: #111827;
+    color: #e5e7eb;
+    font-size: 0.85rem;
+}
+
+    .top-bar a {
+        color: #e5e7eb;
+        text-decoration: none;
+    }
+
+.navbar-brand span {
+    font-weight: 700;
+    letter-spacing: .03em;
+}
+
+.nav-link {
+    font-weight: 500;
+}
+
+    .nav-link.active {
+        color: #0d6efd !important;
+    }
+
+.search-box {
+    max-width: 550px;
+}
+
+.badge-cart {
+    font-size: 0.7rem;
+    transform: translate(40%, -40%);
+}
+
+.category-pill {
+    border-radius: 999px;
+    padding: .25rem .75rem;
+    background-color: #e5e7eb;
+    font-size: .85rem;
+    margin-right: .35rem;
+    margin-bottom: .35rem;
+    cursor: pointer;
+}
+
+    .category-pill:hover {
+        background-color: #d1d5db;
+    }
+
+.main-content {
+    min-height: calc(100vh - 280px);
+}
+
+footer a {
+    text-decoration: none;
+    color: inherit;
+}
+
+    footer a:hover {
+        text-decoration: underline;
+    }
+
+.footer-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: .75rem;
+}
+
+.breadcrumb {
+    --bs-breadcrumb-divider: '>';
+}
+
+.toast-container {
+    z-index: 1080;
+}
