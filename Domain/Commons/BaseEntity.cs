@@ -16,21 +16,21 @@ namespace Domain.Commons
 
         public void Restore()
         {
-            if (!IsDeleted) 
-            { 
-                IsDeleted = true;
+            if (IsDeleted)
+            {
+                IsDeleted = false;
+                DeletedDate = DateTime.Now;
                 UpdateDate = DateTime.Now;
-                DeletedDate = null;
             }
         }
 
         public void SoftDelete()
         {
-            if (IsDeleted) 
+            if (!IsDeleted)
             {
-                IsDeleted = false;
-                DeletedDate = DateTime.Now;
+                IsDeleted = true;
                 UpdateDate = DateTime.Now;
+                DeletedDate = null;
             }
         }
     }

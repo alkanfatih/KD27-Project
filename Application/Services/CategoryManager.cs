@@ -32,7 +32,7 @@ namespace Application.Services
 
         public async Task DeleteAsync(int id)
         {
-            var category = await _unitOfWork.CategoryRepository.GetByIdAsync(id);
+            var category = await _unitOfWork.CategoryRepository.GetByIdAsync(id, igonereFilters:true);
             if (category == null)
                 throw new NotFoundException($"Silinecek kategori bulunamadı (id: {id})");
 
