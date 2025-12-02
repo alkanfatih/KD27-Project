@@ -1,0 +1,13 @@
+﻿@using Application.DTOs.CategoryDTOs
+@model IEnumerable<CategoryDto>
+
+<ul class="dropdown-menu shadow border-0">
+    <li><a class="dropdown-item" href="@Url.Action("List","Product", new { category = "Yeni Ürünler" })">Yeni Ürünler</a></li>
+    <li><a class="dropdown-item" href="@Url.Action("List","Product", new { category = "Popüler" })">En Popüler</a></li>
+    <li><hr class="dropdown-divider" /></li>
+    @foreach (var cat in Model)
+    {
+        <li><a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-CategoryId="@cat.Id">@cat.Name</a></li>
+    }
+    
+</ul>

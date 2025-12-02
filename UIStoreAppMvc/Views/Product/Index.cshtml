@@ -1,0 +1,23 @@
+﻿@model ProductListViewModel
+<div class="row">
+    <div class="col-md-12">
+        <div>
+            <!--Filtreleme-->
+            @Html.Partial("_FilteredMenu")
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var product in Model.Products)
+            {
+                @Html.Partial("_ProductCard", product)
+            }
+        </div>
+        <div>
+            &nbsp;
+        </div>
+        <div>
+            <!--Sayfalama-->
+            @Html.Partial("_Pagination", Model.Pagination)
+        </div>
+    </div>
+</div>
+

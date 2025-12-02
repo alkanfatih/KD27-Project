@@ -1,0 +1,40 @@
+﻿@using Domain.RequestParameters
+@model PaginationInfo
+
+@if (Model.TotalPages > 1)
+{
+    <nav aria-label="Sayfalama">
+        <ul class="pagination justify-content-center">
+
+            <!-- Geri Butonu -->
+            <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                <a class="page-link" href="?pageNumber=@(Model.CurrentPage - 1)&pageSize=@Model.PageSize&@Model.QueryString">«</a>
+            </li>
+
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                @*                 <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+        <a class="page-link" href="?pageNumber=@i&pageSize=@Model.PageSize&@Model.QueryString">@i</a>
+        </li> *@
+
+                <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                    <a class="page-link"
+                       asp-controller="@Model.Controller"
+                       asp-action="@Model.Action"
+                       asp-route-pageNumber="@i"
+                       asp-route-pageSize="@Model.PageSize"
+                       asp-route-categoryId="@Context.Request.Query["categoryId"]">
+                        @i
+                    </a>
+                </li>
+
+            }
+
+            <!-- İleri Butonu -->
+            <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                <a class="page-link" href="?pageNumber=@(Model.CurrentPage + 1)&pageSize=@Model.PageSize&@Model.QueryString">»</a>
+            </li>
+        </ul>
+    </nav>
+}
+

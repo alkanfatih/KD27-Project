@@ -19,7 +19,8 @@ namespace Infrastructure.Persistance.Extensions
 
         public static IQueryable<Product> GetRandomFeaturedProducts(this IQueryable<Product> products, int count = 12)
         { 
-            return products.Where(p => p.IsFeatured).OrderBy(r => Guid.NewGuid()).Take(count);
+            var deneme = products.Where(p => p.IsFeatured == true).OrderBy(r => Guid.NewGuid()).Take(count);
+            return deneme;
         }
 
         public static IQueryable<Product> FilteredByCategoryId(this IQueryable<Product> products, int? categoryId)

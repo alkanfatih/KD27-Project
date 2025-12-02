@@ -1,27 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.UnitOfWorks;
+using Microsoft.AspNetCore.Mvc;
 using UIStoreAppMvc.Models;
 
 namespace UIStoreAppMvc.Controllers
 {
     public class HomeController : Controller
     {
-        private static List<Product> products;
+        private readonly IServiceUnit _services;
 
-        public HomeController()
+        public HomeController(IServiceUnit services)
         {
-            if (products == null)
-                products = new List<Product>()
-                {
-                    new Product { Id=1, Name="Kalem-1", Price=100 },
-                    new Product { Id=2, Name="Kalem-2", Price=120 },
-                    new Product { Id=3, Name="Kalem-3", Price=90 },
-                };
+            _services = services;
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var featured = await _services.ProductService.GetFeaturedProductsAsync(8);
+            return View(featured);
         }
     }
 }

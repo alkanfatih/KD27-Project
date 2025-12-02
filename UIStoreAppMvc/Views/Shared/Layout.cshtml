@@ -53,14 +53,7 @@
                             <a class="nav-link dropdown-toggle fw-semibold" href="#" data-bs-toggle="dropdown">
                                 <i class="fa-solid fa-bars me-1"></i>Kategoriler
                             </a>
-                            <ul class="dropdown-menu shadow border-0">
-                                <li><a class="dropdown-item" href="@Url.Action("List","Product", new { category = "Yeni Ürünler" })">Yeni Ürünler</a></li>
-                                <li><a class="dropdown-item" href="@Url.Action("List","Product", new { category = "Popüler" })">En Popüler</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="@Url.Action("List","Product", new { category = "Elektronik" })">Elektronik</a></li>
-                                <li><a class="dropdown-item" href="@Url.Action("List","Product", new { category = "Moda" })">Moda</a></li>
-                                <li><a class="dropdown-item" href="@Url.Action("List","Product", new { category = "Ev & Yaşam" })">Ev & Yaşam</a></li>
-                            </ul>
+                            @await Component.InvokeAsync("CategoriesMenu")
                         </li>
 
                         <li class="nav-item">

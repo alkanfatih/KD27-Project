@@ -1,7 +1,12 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
-}
-
-<h1>Index</h1>
-
+﻿@using Application.DTOs.ProductDTOs
+@model IEnumerable<ProductDto>
+<div class="row">
+    <div class="col-md-12">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            @foreach (var product in Model)
+            {
+                @Html.Partial("_ProductCard", product)
+            }
+        </div>
+    </div>
+</div>

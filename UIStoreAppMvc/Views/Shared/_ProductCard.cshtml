@@ -1,0 +1,28 @@
+﻿@using Application.DTOs.ProductDTOs
+@model ProductDto
+
+<div class="card product-card shadow-sm border-0 rounded-4 overflow-hidden">
+    <img src="/images/products/@Model.ImageUrl" class="card-img-top" alt="Ürün Görseli">
+    <div class="card-body d-flex flex-column justify-content-between">
+        <h5 class="card-title fw-semibold text-dark">@Model.Name</h5>
+        <p class="card-text text-muted small mb-2">@Model.Description.</p>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="fw-bold fs-5 text-warning">
+                <i class="bi bi-tag-fill me-1"></i>@Model.Price.ToString("C2")
+            </span>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="/Product/Details/@Model.Id" class="btn btn-outline-warning w-100">
+                <i class="bi bi-eye-fill me-1"></i>İncele
+            </a>
+            <form asp-controller="ShoppingCart" asp-action="Add" method="post" class="mt-auto">
+                <input type="hidden" name="productId" value="@Model.Id" />
+                <input type="hidden" name="quantity" value="1" />
+                <button class="btn btn-warning w-100 text-white">
+                    <i class="bi bi-cart-plus-fill me-1"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
