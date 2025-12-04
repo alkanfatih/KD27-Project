@@ -1,0 +1,61 @@
+﻿@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Kayıt Ol";
+}
+
+<div class="d-flex justify-content-center align-items-center min-vh-100 bg-light">
+    <div class="card shadow-lg p-4 rounded-4" style="width: 100%; max-width: 500px;">
+        <h3 class="text-center mb-4 text-warning fw-bold">Kayıt Ol</h3>
+
+        <form asp-action="Register" method="post">
+            <div class="mb-3">
+                <label asp-for="FullName" class="form-label">Ad Soyad</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="bi bi-person-fill text-muted"></i></span>
+                    <input asp-for="FullName" class="form-control" placeholder="Adınızı ve soyadınızı girin" />
+                </div>
+                <span asp-validation-for="FullName" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label">E-Posta</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="bi bi-envelope-fill text-muted"></i></span>
+                    <input asp-for="Email" class="form-control" placeholder="E-posta adresiniz" />
+                </div>
+                <span asp-validation-for="Email" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">Şifre</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="bi bi-lock-fill text-muted"></i></span>
+                    <input asp-for="Password" type="password" class="form-control" placeholder="Şifreniz" />
+                </div>
+                <span asp-validation-for="Password" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ConfirmPassword" class="form-label">Şifre Tekrar</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="bi bi-shield-lock-fill text-muted"></i></span>
+                    <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Şifrenizi tekrar girin" />
+                </div>
+                <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+            </div>
+
+            <button type="submit" class="btn w-100 text-white" style="background-color: #f97316;">
+                <i class="bi bi-person-plus-fill me-1"></i> Kayıt Ol
+            </button>
+        </form>
+
+        <div class="text-center mt-3">
+            <small>Zaten bir hesabınız var mı? <a href="/Account/Login" class="text-decoration-none text-primary">Giriş Yapın</a></small>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

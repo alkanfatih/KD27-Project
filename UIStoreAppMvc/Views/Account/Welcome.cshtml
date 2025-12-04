@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Hoş Geldiniz";
+}
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-warning">Hoş Geldiniz, @User.Identity.Name!</h2>
+        <p class="lead text-muted">Alışverişe başlamadan önce size özel fırsatlarımızı keşfedin.</p>
+    </div>
+
+    <div class="row justify-content-center g-4">
+        <div class="col-md-5">
+            <div class="card shadow-sm border-0 rounded-4 h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-building text-info fs-3 me-2"></i>
+                        <h5 class="card-title mb-0">Kurumsal Müşteri Olun</h5>
+                    </div>
+                    <p class="card-text text-muted">
+                        %15 indirim, ücretsiz kargo, toplu alım talepleri gibi avantajlardan faydalanın.
+                    </p>
+                    <a href="/Account/ApplyCorporate" class="btn btn-outline-info w-100">
+                        <i class="bi bi-briefcase-fill me-1"></i> Kurumsal Başvuru
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card shadow-sm border-0 rounded-4 h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-diagram-3-fill text-warning fs-3 me-2"></i>
+                        <h5 class="card-title mb-0">Ajans Partneri Olun</h5>
+                    </div>
+                    <p class="card-text text-muted">
+                        %30 indirim, API erişimi, toptan satış desteği ve çok daha fazlası!
+                    </p>
+                    <a href="/Account/ApplyAgency" class="btn btn-outline-warning w-100">
+                        <i class="bi bi-globe2 me-1"></i> Ajans Başvurusu
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <a href="/Product" class="btn btn-lg text-white px-4" style="background-color: #f97316;">
+            <i class="bi bi-shop me-2"></i> Alışverişe Devam Et
+        </a>
+    </div>
+</div>
